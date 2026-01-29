@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Selenium Practice Playground</title>
+
+  <style>
+    body { font-family: Arial; background:#f5f7fa; padding:20px; }
+    section { background:white; padding:15px; margin:15px 0; border-radius:8px; }
+    button { padding:6px 12px; margin:4px; }
+    input, select, textarea { margin:4px; padding:6px; }
+    .hidden { display:none; }
+    .overlay { position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,.3); display:none; }
+  </style>
+
+ 
+</head>
+<section id="dynamicTableSection">
+  <h3>Dynamic Table (Selenium Practice)</h3>
+
+  <button id="addRowBtn" onclick="addRow()">Add Row</button>
+  <button id="deleteRowBtn" onclick="deleteRows()">Delete Selected</button>
+
+  <table border="1" id="dynTable" style="margin-top:10px;">
+    <tr>
+      <th>Select</th>
+      <th>Name</th>
+      <th>ID</th>
+    </tr>
+  </table>
+</section>
+<section>
+  <h2>🎯 Selenium Practice Tasks</h2>
+  <ol>
+    <li>Enter name, password and message.</li>
+    <li>Select Java & Selenium checkboxes.</li>
+    <li>Select QA radio button.</li>
+    <li>Select a city from dropdown.</li>
+    <li>Handle alert popup.</li>
+    <li>Wait for delayed button and click.</li>
+    <li>Upload a file and validate name.</li>
+    <li>Select a date from calendar.</li>
+    <li>Switch to iframe and type text.</li>
+    <li>Handle Shadow DOM input.</li>
+    <li>Drag and drop element.</li>
+    <li>Right click button.</li>
+    <li>Hover and click hidden menu.</li>
+    <li>Select auto-suggest value.</li>
+    <li>Add rows and validate table count.</li>
+    <li>Handle overlay click intercept.</li>
+    <li>Trigger API and validate response.</li>
+  </ol>
+</section>
+
+<body>
+<section>
+  <h2>✅ Practice Tasks</h2>
+  <ul>
+    <li>Enter name, password and message.</li>
+    <li>Select Java + Selenium checkbox.</li>
+    <li>Select QA radio button.</li>
+    <li>Select a city from dropdown.</li>
+    <li>Click alert and accept it.</li>
+    <li>Wait for delayed button and click it.</li>
+    <li>Add rows and validate table count.</li>
+    <li>Handle overlay and click underlying button.</li>
+  </ul>
+</section>
+
+<h1>🧪 Selenium Practice Playground</h1>
+<p>Built by Mounika — Automate everything on this page.</p>
+
+<section>
+  <h3>Text Inputs</h3>
+  <input id="txtName" placeholder="Enter Name">
+  <input id="txtPwd" type="password" placeholder="Password">
+  <textarea id="txtMsg" placeholder="Message"></textarea>
+</section>
+
+<section>
+  <h3>Checkbox / Radio</h3>
+  <input type="checkbox" id="cbJava"> Java
+  <input type="checkbox" id="cbSel"> Selenium
+  <br>
+  <input type="radio" name="role" id="rdQA"> QA
+  <input type="radio" name="role" id="rdDev"> Dev
+</section>
+
+<section>
+  <h3>Dropdown</h3>
+  <select id="cityDD">
+    <option value="">Select City</option>
+    <option>Delhi</option>
+    <option>Bangalore</option>
+    <option>Chennai</option>
+  </select>
+</section>
+
+<section>
+  <h3>Buttons & Alert</h3>
+  <button id="alertBtn" onclick="showAlert()">Show Alert</button>
+</section>
+
+<section>
+  <h3>Delayed Element</h3>
+  <button id="delayedBtn" style="display:none">Appears After 3s</button>
+</section>
+
+<script>
+  function showAlert(){
+    alert("Hello from Selenium Playground!");
+  }
+
+  function loadDelayed(){
+    setTimeout(()=>{
+      document.getElementById("delayedBtn").style.display="inline-block";
+    },3000);
+  }
+
+  function addRow(){
+    let table = document.getElementById("dynTable");
+    let row = table.insertRow();
+
+    let cb = row.insertCell(0);
+    let name = row.insertCell(1);
+    let id = row.insertCell(2);
+
+    cb.innerHTML = "<input type='checkbox' class='rowChk'>";
+    name.innerText = "User";
+    id.innerText = Math.floor(Math.random()*1000);
+  }
+
+  function deleteRows(){
+    let table = document.getElementById("dynTable");
+    let checks = document.getElementsByClassName("rowChk");
+
+    for(let i = checks.length-1; i >= 0; i--){
+      if(checks[i].checked){
+        table.deleteRow(i+1);
+      }
+    }
+  }
+
+  function toggleOverlay(){
+    let o=document.getElementById("overlay");
+    o.style.display=o.style.display==="block"?"none":"block";
+  }
+
+  window.onload = loadDelayed;
+</script>
+
+
+<section>
+  <h3>Covered Element (Click Intercept Demo)</h3>
+  <button id="overlayBtn" onclick="toggleOverlay()">Toggle Overlay</button>
+</section>
+
+<div class="overlay" id="overlay"></div>
+
+<section>
+  <h3>📅 Calendar Widget</h3>
+  <input type="date" id="datePicker">
+</section>
+<section>
+  <h3>📂 File Upload</h3>
+  <input type="file" id="fileUpload">
+  <p id="fileName"></p>
+</section>
+
+<script>
+document.getElementById("fileUpload").addEventListener("change", function(){
+  document.getElementById("fileName").innerText =
+    "Selected: " + this.files[0].name;
+});
+</script>
+
+<section>
+  <h3>🖼 iFrame Practice</h3>
+
+  <iframe id="demoFrame" width="100%" height="120">
+    <!DOCTYPE html>
+    <html>
+      <body style="font-family:Arial;">
+        <h4>Inside iFrame</h4>
+        <input id="frameInput" placeholder="Type inside iframe">
+        <button id="frameBtn">Frame Button</button>
+      </body>
+    </html>
+  </iframe>
+</section>
+
+<section>
+  <h3>🌑 Shadow DOM Practice</h3>
+  <div id="shadowHost"></div>
+</section>
+
+<script>
+const host = document.getElementById("shadowHost");
+const shadow = host.attachShadow({ mode: "open" });
+
+shadow.innerHTML = `
+  <style>
+    input { padding:6px; margin:4px; }
+  </style>
+  <p>Inside Shadow Root</p>
+  <input id="shadowInput" placeholder="Shadow input">
+  <button id="shadowBtn">Shadow Button</button>
+`;
+</script>
+
+<section>
+  <h3>🖱 Drag & Drop</h3>
+
+  <div id="drag" draggable="true"
+       style="width:80px;height:40px;background:#4caf50;color:white;
+              text-align:center;line-height:40px;cursor:pointer;">
+    Drag me
+  </div>
+
+  <div id="drop"
+       style="width:120px;height:60px;border:2px dashed #333;margin-top:10px;">
+    Drop here
+  </div>
+</section>
+
+<script>
+const drag = document.getElementById("drag");
+const drop = document.getElementById("drop");
+
+drag.addEventListener("dragstart", e => e.dataTransfer.setData("text","drag"));
+drop.addEventListener("dragover", e => e.preventDefault());
+drop.addEventListener("drop", e => {
+  drop.innerText = "Dropped!";
+});
+</script>
+<section>
+  <h3>🖱 Right Click</h3>
+  <button id="rightClickBtn">Right Click Me</button>
+  <p id="rcResult"></p>
+</section>
+
+<script>
+document.getElementById("rightClickBtn").addEventListener("contextmenu", e => {
+  e.preventDefault();
+  document.getElementById("rcResult").innerText = "Right click successful!";
+});
+</script>
+<section>
+  <h3>🖱 Hover Menu</h3>
+
+  <div id="hoverBox" style="width:120px;padding:10px;background:#2196f3;color:white;">
+    Hover Me
+    <div id="hoverMenu"
+         style="display:none;background:white;color:black;margin-top:5px;padding:5px;">
+      <button id="hoverItem">Hidden Button</button>
+    </div>
+  </div>
+</section>
+
+<script>
+const hb = document.getElementById("hoverBox");
+const hm = document.getElementById("hoverMenu");
+
+hb.onmouseover = () => hm.style.display = "block";
+hb.onmouseout = () => hm.style.display = "none";
+</script>
+<section>
+  <h3>🔎 Auto Suggest</h3>
+  <input id="autoInput" placeholder="Type: In">
+  <div id="suggestions"></div>
+</section>
+
+<script>
+const data = ["India","Indonesia","Indigo","Iran","Iceland"];
+
+document.getElementById("autoInput").addEventListener("input", function(){
+  let v = this.value.toLowerCase();
+  let s = document.getElementById("suggestions");
+  s.innerHTML = "";
+
+  data.filter(x=>x.toLowerCase().includes(v)).forEach(item=>{
+    let d = document.createElement("div");
+    d.innerText = item;
+    d.onclick = ()=> this.value=item;
+    s.appendChild(d);
+  });
+});
+</script>
+<section>
+  <h3>🌐 API Trigger</h3>
+  <button id="apiBtn">Call API</button>
+  <pre id="apiResult"></pre>
+</section>
+
+<script>
+document.getElementById("apiBtn").onclick = ()=>{
+  fetch("https://jsonplaceholder.typicode.com/users/1")
+    .then(r=>r.json())
+    .then(d=>{
+      document.getElementById("apiResult").innerText =
+        JSON.stringify(d,null,2);
+    });
+};
+</script>
+
+
+</body>
+</html>
